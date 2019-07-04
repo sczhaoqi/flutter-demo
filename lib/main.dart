@@ -10,6 +10,8 @@
 // bar items. The first one is selected.](https://flutter.github.io/assets-for-api-docs/assets/material/bottom_navigation_bar.png)
 
 import 'package:flutter/material.dart';
+import 'package:flutter1/utils/LocalStorage.dart';
+import 'package:flutter1/views/userPage.dart';
 
 import 'views/loginPage.dart';
 
@@ -26,6 +28,7 @@ class MyApp extends StatelessWidget {
       home: MyStatefulWidget(),
       routes: <String, WidgetBuilder>{
         '/login': (BuildContext context) => new LoginPage(),
+        '/user': (BuildContext context) => new UserPage(),
       },
     );
   }
@@ -72,7 +75,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           IconButton(
             icon: Icon(Icons.person_outline),
             tooltip: "登录",
-            onPressed: () => Navigator.of(context).pushNamed("/login"),
+            onPressed: (){
+            LocalStorage.getToken().then((token) {
+            if (token == null) {
+            Navigator.of(context).pushNamed("/login");
+            }
+            else {
+            Navigator.of(context).pushNamed("/user");
+            }
+            });
+            },
           )
         ],
       ),

@@ -6,11 +6,20 @@ class UserApi {
     Map<String, String> paras = Map();
     paras.addAll({"username": username, "password": password});
     return NetUtil.postJson("/user/login", paras).then((token) {
-      LocalStorage.saveString(LocalStorage.SAVED_TOKEN_KEY,token);
+      LocalStorage.saveString(LocalStorage.SAVED_TOKEN_KEY, token);
       print("user:$username token:$token");
-      Future<String> savedToken = LocalStorage.getString(LocalStorage.SAVED_TOKEN_KEY);
+      Future<String> savedToken =
+          LocalStorage.getString(LocalStorage.SAVED_TOKEN_KEY);
       savedToken.then(print);
       return Future.value(token);
+    });
+  }
+
+  static Future<String> info() {
+    Map<String, String> paras = Map();
+    return NetUtil.getJson("/user", paras).then((user) {
+      print(user);
+      return Future.value(user.toString());
     });
   }
 }

@@ -160,17 +160,12 @@ class NetUtil {
     }
   }
 
-  ///获取授权token
-  static Future<String> getToken() {
-    return LocalStorage.getString(LocalStorage.SAVED_TOKEN_KEY);
-  }
-
   static Future<Options> getOptions(String method, String contentType) async {
     Options op = new Options(contentType: ContentType.parse(contentType));
     op.method = method;
 
     /// 统一带上token
-    String token = await getToken();
+    String token = await LocalStorage.getToken();
     print("123$token");
     if (token != null && token != "") {
       var header = op.headers;

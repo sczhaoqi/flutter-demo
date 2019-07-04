@@ -32,4 +32,9 @@ class LocalStorage {
     final preferences = await SharedPreferences.getInstance();
     return preferences.getString(key);
   }
+
+  ///获取授权token
+  static Future<String> getToken() {
+    return LocalStorage.getString(LocalStorage.SAVED_TOKEN_KEY);
+  }
 }

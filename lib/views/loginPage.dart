@@ -70,7 +70,11 @@ class _LoginPageState extends State<LoginPage> {
                             UserApi.login(
                                     _unameController.text, _pwdController.text)
                                 .then((token) {
-                              MessageUtil.showErrorToast("登录成功,token:$token");
+                                  if(token != null) {
+                                    MessageUtil.showErrorToast(
+                                        "登录成功,token:$token");
+                                    Navigator.of(context).pushReplacementNamed("/user");
+                                  }
                             });
                           }
                         },
